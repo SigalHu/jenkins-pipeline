@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+    environment {
+        CONTEXT = 'some context'
+    }
+    stages {
+        stage('Step1') {
+            input {
+                    message "Input some message!"
+                    ok "Ok"
+                    submitter "sigalhu"
+                    parameters {
+                    string(name: 'message1', defaultValue: 'value1', description: 'Input message1!')
+                    string(name: 'message2', defaultValue: 'value2', description: 'Input message2!')
+                }
+            }
+            steps {
+                echo 'step1'
+                sh 'python step1.py'
+            }
+        }
+        stage('Step2') {
+            steps {
+                echo 'step2'
+                sh 'python step1.py'
+            }
+        }
+    }
+}
