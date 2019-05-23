@@ -5,7 +5,7 @@
 """
 import os
 
-print(os.getenv("message1"))
-print(os.getenv("message2"))
-print(os.getenv("CONTEXT"))
-os.putenv("CONTEXT", os.getenv("CONTEXT") + "1")
+print(os.environ["message1"])
+print(os.environ["message2"])
+print(os.environ["CONTEXT"])
+os.environ["CONTEXT"] += "1"
