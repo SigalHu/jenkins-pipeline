@@ -16,13 +16,13 @@ pipeline {
             }
             steps {
                 echo 'step1'
-                sh 'python ./step1.py'
+                sh 'python py_pipeline/step1.py'
             }
         }
         stage('Step2') {
             steps {
                 echo 'step2'
-                sh 'python ./step1.py'
+                sh 'python py_pipeline/step1.py'
             }
         }
     }
