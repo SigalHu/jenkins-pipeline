@@ -23,7 +23,7 @@ pipeline {
         stage('Step2') {
             steps {
                 echo 'step2'
-                sh 'python py_pipeline/step1.py'
+                sh 'python py_pipeline/step2.py'
             }
         }
     }

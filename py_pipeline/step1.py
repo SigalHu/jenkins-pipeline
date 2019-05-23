@@ -5,7 +5,6 @@
 """
 import os
 
-print(os.environ["message1"])
-print(os.environ["message2"])
-print(os.environ["CONTEXT"])
-os.environ["CONTEXT"] += "1"
+print("[INFO] message1=%s" % os.getenv("message1"))
+print("[WARN] message2=%s" % os.getenv("message2"))
+print("[ERROR] CONTEXT=%s" % os.getenv("CONTEXT"))
