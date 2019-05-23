@@ -17,6 +17,7 @@ pipeline {
             steps {
                 echo 'step1'
                 sh 'python py_pipeline/step1.py'
+                echo $CONTEXT
             }
         }
         stage('Step2') {
