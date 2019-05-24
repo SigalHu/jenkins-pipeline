@@ -6,7 +6,7 @@
 import os
 
 
-def get_build_dir():
+def get_build_dir() -> str:
     build_dir = os.path.join(os.getenv('JENKINS_HOME'), 'jobs', os.getenv('JOB_NAME').replace('/', '/branches/'),
                              'builds',
                              os.getenv('BUILD_NUMBER'))
@@ -15,7 +15,7 @@ def get_build_dir():
     return build_dir
 
 
-def get_workplace():
+def get_workplace() -> str:
     workplace = os.getenv('WORKSPACE')
     if not os.path.isdir(workplace):
         raise Exception('The workplace is not dir, workplace=%s' % workplace)
