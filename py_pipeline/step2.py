@@ -4,4 +4,8 @@
 @date 2019-05-24
 """
 
-raise Exception("Error to exec step2!")
+from common import jenkins_helper
+
+if __name__ == '__main__':
+    print("The workplace is %s" % jenkins_helper.get_workplace())
+    print("The build dir is %s" % jenkins_helper.get_build_dir())

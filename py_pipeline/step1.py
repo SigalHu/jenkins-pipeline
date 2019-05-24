@@ -5,6 +5,7 @@
 """
 import os
 
-print("[INFO] message1=%s" % os.getenv("message1"))
-print("[WARN] message2=%s" % os.getenv("message2"))
-print("[ERROR] CONTEXT=%s" % os.getenv("CONTEXT"))
+if __name__ == '__main__':
+    print("message1=%s" % os.getenv("message1"))
+    print("message2=%s" % os.getenv("message2"))
+    print("PYTHONPATH=%s" % os.getenv("PYTHONPATH"))

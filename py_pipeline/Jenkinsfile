@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        CONTEXT = 'some context'
+        PYTHONPATH = "${WORKPLACE}"
     }
     stages {
         stage('Step1') {
@@ -16,14 +16,13 @@ pipeline {
             }
             steps {
                 echo 'step1'
-                sh 'python py_pipeline/step1.py'
-                echo "${CONTEXT}"
+                sh "python ${PYTHONPATH}/py_pipeline/step1.py"
             }
         }
         stage('Step2') {
             steps {
                 echo 'step2'
-                sh 'python py_pipeline/step2.py'
+                sh "python ${PYTHONPATH}/py_pipeline/step2.py"
             }
         }
     }
