@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         PYTHONPATH = "${WORKSPACE}"
+        ACCESS_KEY = credentials('40b821ba-acf1-40cc-93ee-d34edd16199e')
     }
     stages {
         stage('Step1') {
@@ -23,6 +24,12 @@ pipeline {
             steps {
                 echo 'step2'
                 sh "python ${PYTHONPATH}/py_pipeline/step2.py"
+            }
+        }
+        stage('Step3') {
+            steps {
+                echo 'step3'
+                sh "python ${PYTHONPATH}/py_pipeline/step3.py"
             }
         }
     }
