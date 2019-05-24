@@ -8,7 +8,7 @@ pipeline {
         stage('Step1') {
             input {
                     message "Input some message!"
-                    ok "Ok"
+                    ok "OK"
                     submitter "sigalhu"
                     parameters {
                     string(name: 'message1', defaultValue: 'value1', description: 'Input message1!')
