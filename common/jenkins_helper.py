@@ -15,11 +15,11 @@ def get_build_dir() -> str:
     return build_dir
 
 
-def get_workplace() -> str:
-    workplace = os.getenv('WORKSPACE')
-    if not os.path.isdir(workplace):
-        raise Exception('The workplace is not dir, workplace=%s' % workplace)
-    return os.getenv('WORKSPACE')
+def get_workspace() -> str:
+    workspace = os.getenv('WORKSPACE')
+    if not os.path.isdir(workspace):
+        raise Exception('The workspace is not dir, workspace=%s' % workspace)
+    return workspace
 
 
 if __name__ == '__main__':

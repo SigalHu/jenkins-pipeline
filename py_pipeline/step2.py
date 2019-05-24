@@ -7,5 +7,5 @@
 from common import jenkins_helper
 
 if __name__ == '__main__':
-    print("The workplace is %s" % jenkins_helper.get_workplace())
+    print("The workspace is %s" % jenkins_helper.get_workspace())
     print("The build dir is %s" % jenkins_helper.get_build_dir())
