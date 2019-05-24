@@ -1,3 +1,14 @@
+def getRemote() {
+    def remote = [:]
+    remote.name = 'localhost'
+    remote.host = '127.0.0.1'
+    remote.user = "${ACCESS_KEY_USR}"
+    remote.port = 22
+    remote.identityFile = "${ACCESS_KEY}"
+    remote.allowAnyHosts = true
+    return remote
+}
+
 pipeline {
     agent any
     environment {
@@ -7,10 +18,10 @@ pipeline {
     stages {
         stage('Step1') {
             input {
-                    message "Input some message!"
-                    ok "OK"
-                    submitter "sigalhu"
-                    parameters {
+                message "Input some message!"
+                ok "OK"
+                submitter "sigalhu"
+                parameters {
                     string(name: 'message1', defaultValue: 'value1', description: 'Input message1!')
                     string(name: 'message2', defaultValue: 'value2', description: 'Input message2!')
                 }
@@ -30,6 +41,24 @@ pipeline {
             steps {
                 echo 'step3'
                 sh "python ${PYTHONPATH}/py_pipeline/step3.py"
+            }
+        }
+        stage('Step4') {
+            input {
+                message "Make some choices!"
+                ok "OK"
+                submitter "sigalhu"
+                parameters {
+                    choice(name: 'delete_file', choices: 'YES\nNO\n', description: 'Delete py_pipeline_step2.py?')
+                }
+            }
+            when {
+                environment name: 'delete_file', value: 'YES'
+            }
+            steps {
+                echo 'step4'
+                sshRemove remote: getRemote(), path: "py_pipeline_step2.py"
+                sh "ssh ${ACCESS_KEY_USR}@127.0.0.1 -o stricthostkeychecking=no \"ls\""
             }
         }
     }
