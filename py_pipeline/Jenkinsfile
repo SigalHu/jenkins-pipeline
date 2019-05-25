@@ -1,4 +1,4 @@
-static def getRemote() {
+def getRemote() {
     def remote = [:]
     remote.name = 'localhost'
     remote.host = '127.0.0.1'
