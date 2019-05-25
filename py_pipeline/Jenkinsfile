@@ -1,4 +1,4 @@
-def getRemote() {
+static def getRemote() {
     def remote = [:]
     remote.name = 'localhost'
     remote.host = '127.0.0.1'
@@ -7,6 +7,18 @@ def getRemote() {
     remote.identityFile = "${ACCESS_KEY}"
     remote.allowAnyHosts = true
     return remote
+}
+
+static def random_choice() {
+    Random random = new Random()
+    StringBuilder sb = new StringBuilder()
+    sb.append(random.nextInt())
+    sb.append('\n')
+    sb.append(random.nextInt())
+    sb.append('\n')
+    sb.append(random.nextInt())
+    sb.append('\n')
+    return sb.toString()
 }
 
 pipeline {
@@ -49,6 +61,7 @@ pipeline {
                 ok "OK"
                 submitter "sigalhu"
                 parameters {
+                    choice(name: 'random_choice', choices: random_choice(), description: 'This is a random choice!')
                     choice(name: 'delete_file', choices: 'YES\nNO\n', description: 'Delete py_pipeline_step2.py?')
                 }
             }
