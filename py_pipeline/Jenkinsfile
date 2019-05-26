@@ -1,30 +1,3 @@
-def getRemote() {
-    def remote = [:]
-    remote.name = 'localhost'
-    remote.host = '127.0.0.1'
-    remote.user = "${ACCESS_KEY_USR}"
-    remote.port = 22
-    remote.identityFile = "${ACCESS_KEY}"
-    remote.allowAnyHosts = true
-    return remote
-}
-
-def random_choice() {
-    echo 'start to exec python step1.py in function random_choice()...'
-    sh "python ${PYTHONPATH}/py_pipeline/step1.py"
-    echo 'end to exec python step1.py in function random_choice()'
-
-    Random random = new Random()
-    StringBuilder sb = new StringBuilder()
-    sb.append(random.nextInt())
-    sb.append('\n')
-    sb.append(random.nextInt())
-    sb.append('\n')
-    sb.append(random.nextInt())
-    sb.append('\n')
-    return sb.toString()
-}
-
 pipeline {
     agent any
     environment {
@@ -78,5 +51,42 @@ pipeline {
                 sh "ssh ${ACCESS_KEY_USR}@127.0.0.1 -o stricthostkeychecking=no \"ls\""
             }
         }
+        stage('Step5') {
+            steps {
+                echo 'start to exec python step1.py in groovy function execPython()...'
+                execPython()
+                echo 'end to exec python step1.py in groovy function execPython()'
+            }
+        }
     }
+}
+
+def getRemote() {
+    def remote = [:]
+    remote.name = 'localhost'
+    remote.host = '127.0.0.1'
+    remote.user = "${ACCESS_KEY_USR}"
+    remote.port = 22
+    remote.identityFile = "${ACCESS_KEY}"
+    remote.allowAnyHosts = true
+    return remote
+}
+
+static String random_choice() {
+    Random random = new Random()
+    StringBuilder sb = new StringBuilder()
+    sb.append(random.nextInt())
+    sb.append('\n')
+    sb.append(random.nextInt())
+    sb.append('\n')
+    sb.append(random.nextInt())
+    sb.append('\n')
+    return sb.toString()
+}
+
+def execPython() {
+    def proc = "python ${PYTHONPATH}/py_pipeline/step1.py".execute(["PYTHONPATH=${PYTHONPATH}"], null)
+    proc.waitFor()
+    println "stdout: ${proc.in.text}"
+    println "stderr: ${proc.err.text}"
 }
