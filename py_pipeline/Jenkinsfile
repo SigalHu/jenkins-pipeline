@@ -9,7 +9,11 @@ def getRemote() {
     return remote
 }
 
-static def random_choice() {
+def random_choice() {
+    echo 'start to exec python step1.py in function random_choice()...'
+    sh "python ${PYTHONPATH}/py_pipeline/step1.py"
+    echo 'end to exec python step1.py in function random_choice()'
+
     Random random = new Random()
     StringBuilder sb = new StringBuilder()
     sb.append(random.nextInt())
