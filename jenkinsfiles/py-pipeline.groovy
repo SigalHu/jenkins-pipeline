@@ -2,7 +2,6 @@
  * @author huxujun
  * @date 2019-05-31
  */
-
 pipeline {
     agent any
 
@@ -66,6 +65,7 @@ pipeline {
                 message "Make some choices!"
                 ok "OK"
                 parameters {
+                    choice(name: 'random_choice', choices: randomChoice(), description: 'This is a random choice!')
                     choice(name: 'delete_file', choices: 'YES\nNO\n', description: 'Delete jenkins_pipeline_LICENSE?')
                 }
             }
@@ -81,5 +81,30 @@ pipeline {
                 }
             }
         }
+        stage('exec python') {
+            steps {
+                script {
+                    echo 'start to exec print_envs.py by groovy script...'
+                    println 'pwd'.execute().text
+                    def proc = "python3 ${PYTHONPATH}/scripts/print_envs.py".execute(["PYTHONPATH=${PYTHONPATH}"], null)
+                    proc.waitFor()
+                    println "stdout: ${proc.in.text}"
+                    println "stderr: ${proc.err.text}"
+                    echo 'end to exec print_envs.py by groovy script'
+                }
+            }
+        }
     }
+}
+
+static String randomChoice() {
+    Random random = new Random()
+    StringBuilder sb = new StringBuilder()
+    sb.append(random.nextInt())
+    sb.append('\n')
+    sb.append(random.nextInt())
+    sb.append('\n')
+    sb.append(random.nextInt())
+    sb.append('\n')
+    return sb.toString()
 }
