@@ -12,4 +12,4 @@ def print_dirs():
 
 
 if __name__ == '__main__':
-    pass
+    print_dirs()

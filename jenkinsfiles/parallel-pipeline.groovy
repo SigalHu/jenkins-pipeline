@@ -67,17 +67,19 @@ pipeline {
                 ok "OK"
                 submitter "sigalhu"
                 parameters {
-                    choice(name: 'delete_file', choices: 'YES\nNO\n', description: 'Delete parallel_pipeline_LICENSE?')
+                    choice(name: 'delete_file', choices: 'YES\nNO\n', description: 'Delete jenkins_pipeline_LICENSE?')
                 }
             }
             when {
                 environment name: 'delete_file', value: 'YES'
             }
             steps {
-                def remote = [name: 'localhost', 'host': '127.0.0.1', 'user': "${ACCESS_KEY_USR}", 'port': 22, 'identityFile': "${ACCESS_KEY}", 'allowAnyHosts': true]
-                echo 'delete file...'
-                sshRemove remote: remote, path: "parallel_pipeline_LICENSE"
-                sh "ssh ${ACCESS_KEY_USR}@127.0.0.1 -o stricthostkeychecking=no \"ls\""
+                script {
+                    def remote = [name: 'localhost', 'host': '127.0.0.1', 'user': "${ACCESS_KEY_USR}", 'port': 22, 'identityFile': "${ACCESS_KEY}", 'allowAnyHosts': true]
+                    echo 'delete file...'
+                    sshRemove remote: remote, path: "jenkins_pipeline_LICENSE"
+                    sh "ssh ${ACCESS_KEY_USR}@127.0.0.1 -o stricthostkeychecking=no \"ls\""
+                }
             }
         }
     }
