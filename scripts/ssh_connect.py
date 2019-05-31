@@ -1,19 +1,20 @@
 # encoding=utf-8
 """
 @author huxujun
-@date 2019-05-24
+@date 2019-05-31
 """
 import os
 
 import paramiko
 
-if __name__ == '__main__':
+
+def ssh_connect():
     with paramiko.SSHClient() as ssh:
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect("127.0.0.1", username=os.getenv("ACCESS_KEY_USR"), key_filename=os.getenv("ACCESS_KEY"))
 
         sftp = paramiko.SFTPClient.from_transport(ssh.get_transport())
-        sftp.put("parallel_pipeline/step2.py", "parallel_pipeline_step2.py")
+        sftp.put("LICENSE", "parallel_pipeline_LICENSE")
         print("SFTP listdir start...")
         for dir_str in sftp.listdir():
             print(dir_str)
@@ -24,3 +25,7 @@ if __name__ == '__main__':
         for line in stdout.readlines():
             print(str(line).replace("\n", ""))
         print("SSH ls end.")
+
+
+if __name__ == '__main__':
+    pass
