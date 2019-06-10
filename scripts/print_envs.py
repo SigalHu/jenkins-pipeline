@@ -4,6 +4,7 @@
 @date 2019-05-31
 """
 import os
+import sys
 
 
 def print_envs():
@@ -13,4 +14,5 @@ def print_envs():
 
 
 if __name__ == '__main__':
+    print(sys.argv)
     print_envs()

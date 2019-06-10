@@ -44,56 +44,56 @@ pipeline {
                 }
             }
         }
-        stage('print dirs') {
-            steps {
-                dir('scripts') {
-                    echo 'print dirs...'
-                    sh "python3 scripts/print_dirs.py"
-                }
-            }
-        }
-        stage('ssh connect') {
-            steps {
-                dir('scripts') {
-                    echo 'test ssh connect...'
-                    sh "python3 scripts/ssh_connect.py"
-                }
-            }
-        }
-        stage('delete file') {
-            input {
-                message "Make some choices!"
-                ok "OK"
-                parameters {
-                    choice(name: 'random_choice', choices: randomChoice(), description: 'This is a random choice!')
-                    choice(name: 'delete_file', choices: 'YES\nNO\n', description: 'Delete jenkins_pipeline_LICENSE?')
-                }
-            }
-            when {
-                environment name: 'delete_file', value: 'YES'
-            }
-            steps {
-                script {
-                    def remote = [name: 'localhost', 'host': '127.0.0.1', 'user': "${ACCESS_KEY_USR}", 'port': 22, 'identityFile': "${ACCESS_KEY}", 'allowAnyHosts': true]
-                    echo 'delete file...'
-                    sshRemove remote: remote, path: "jenkins_pipeline_LICENSE"
-                    sh "ssh ${ACCESS_KEY_USR}@127.0.0.1 -o stricthostkeychecking=no \"ls\""
-                }
-            }
-        }
-        stage('exec python') {
-            steps {
-                script {
-                    echo 'start to exec print_envs.py by groovy script...'
-                    println 'pwd'.execute().text
-                    def proc = "python3 ${PYTHONPATH}/scripts/print_envs.py".execute(["PYTHONPATH=${PYTHONPATH}"], null)
-                    proc.waitFor()
-                    println "stdout: ${proc.in.text}"
-                    println "stderr: ${proc.err.text}"
-                    echo 'end to exec print_envs.py by groovy script'
-                }
-            }
-        }
+//        stage('print dirs') {
+//            steps {
+//                dir('scripts') {
+//                    echo 'print dirs...'
+//                    sh "python3 scripts/print_dirs.py"
+//                }
+//            }
+//        }
+//        stage('ssh connect') {
+//            steps {
+//                dir('scripts') {
+//                    echo 'test ssh connect...'
+//                    sh "python3 scripts/ssh_connect.py"
+//                }
+//            }
+//        }
+//        stage('delete file') {
+//            input {
+//                message "Make some choices!"
+//                ok "OK"
+//                parameters {
+//                    choice(name: 'random_choice', choices: randomChoice(), description: 'This is a random choice!')
+//                    choice(name: 'delete_file', choices: 'YES\nNO\n', description: 'Delete jenkins_pipeline_LICENSE?')
+//                }
+//            }
+//            when {
+//                environment name: 'delete_file', value: 'YES'
+//            }
+//            steps {
+//                script {
+//                    def remote = [name: 'localhost', 'host': '127.0.0.1', 'user': "${ACCESS_KEY_USR}", 'port': 22, 'identityFile': "${ACCESS_KEY}", 'allowAnyHosts': true]
+//                    echo 'delete file...'
+//                    sshRemove remote: remote, path: "jenkins_pipeline_LICENSE"
+//                    sh "ssh ${ACCESS_KEY_USR}@127.0.0.1 -o stricthostkeychecking=no \"ls\""
+//                }
+//            }
+//        }
+//        stage('exec python') {
+//            steps {
+//                script {
+//                    echo 'start to exec print_envs.py by groovy script...'
+//                    println 'pwd'.execute().text
+//                    def proc = "python3 ${PYTHONPATH}/scripts/print_envs.py".execute(["PYTHONPATH=${PYTHONPATH}"], null)
+//                    proc.waitFor()
+//                    println "stdout: ${proc.in.text}"
+//                    println "stderr: ${proc.err.text}"
+//                    echo 'end to exec print_envs.py by groovy script'
+//                }
+//            }
+//        }
     }
 }
 
