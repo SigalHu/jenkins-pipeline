@@ -21,7 +21,7 @@ def __schedule(block_num, block_size, total_size):
     n = round(percent * 50)
     s = ('#' * n).ljust(50, ' ')
     f = sys.stdout
-    f.write(percent_str.ljust(8, ' ') + '[' + s + ']')
+    f.write('[' + s + ']' + percent_str.rjust(8, ' '))
     f.flush()
     f.write('\r')
 
