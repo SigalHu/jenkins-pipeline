@@ -11,6 +11,10 @@ pipeline {
         PYTHONPATH = "${WORKSPACE}/scripts"
     }
 
+    parameters {
+        choice(name: 'random_choice', choices: randomChoice(), description: 'This is a random choice!')
+    }
+
     stages {
         stage('checkout scripts') {
             input {
@@ -65,7 +69,6 @@ pipeline {
                 message "Make some choices!"
                 ok "OK"
                 parameters {
-                    choice(name: 'random_choice', choices: randomChoice(), description: 'This is a random choice!')
                     choice(name: 'delete_file', choices: 'YES\nNO\n', description: 'Delete jenkins_pipeline_LICENSE?')
                 }
             }
