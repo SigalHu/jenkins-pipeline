@@ -10,6 +10,7 @@ pipeline {
         ACCESS_KEY = credentials('40b821ba-acf1-40cc-93ee-d34edd16199e')
 //        PYTHONPATH = "${WORKSPACE}/scripts"
         PYTHONPATH = "${WORKSPACE}"
+        OUTPUT = "${WORKSPACE}/output/${JOB_NAME}"
     }
 
     parameters {
@@ -38,11 +39,15 @@ pipeline {
                 message "Input some message!"
                 ok "OK"
                 parameters {
-                    string(name: 'message1', defaultValue: 'value1', description: 'Input message1!')
-                    string(name: 'message2', defaultValue: 'value2', description: 'Input message2!')
+                    string(name: 'message1', defaultValue: message1(), description: 'Input message1!')
+                    string(name: 'message2', defaultValue: message2(), description: 'Input message2!')
                 }
             }
             steps {
+                dir("${OUTPUT}"){
+                    writeFile encoding: 'utf-8', file: 'params.message1', text: "${params.message1}"
+                    writeFile encoding: 'utf-8', file: 'params.message2', text: "${params.message2}"
+                }
 //                dir('scripts') {
                     echo 'print envs...'
                     sh "python3 scripts/print_envs.py"
@@ -111,4 +116,26 @@ static String randomChoice() {
     sb.append(random.nextInt())
     sb.append('\n')
     return sb.toString()
+}
+
+static String message1() {
+    dir("${OUTPUT}"){
+        try {
+            def result = readFile encoding: 'utf-8', file: 'params.message1'
+            return result
+        } catch (ex) {
+            return 'value1'
+        }
+    }
+}
+
+static String message2() {
+    dir("${OUTPUT}"){
+        try {
+            def result = readFile encoding: 'utf-8', file: 'params.message1'
+            return result
+        } catch (ex) {
+            return 'value2'
+        }
+    }
 }
