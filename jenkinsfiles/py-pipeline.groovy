@@ -119,23 +119,19 @@ static String randomChoice() {
 }
 
 static String message1() {
-    dir("${OUTPUT}"){
-        try {
-            def result = readFile encoding: 'utf-8', file: 'params.message1'
-            return result
-        } catch (ex) {
-            return 'value1'
-        }
+    try {
+        def result = readFile encoding: 'utf-8', file: "${OUTPUT}/params.message1"
+        return result
+    } catch (ex) {
+        return 'value1'
     }
 }
 
 static String message2() {
-    dir("${OUTPUT}"){
-        try {
-            def result = readFile encoding: 'utf-8', file: 'params.message1'
-            return result
-        } catch (ex) {
-            return 'value2'
-        }
+    try {
+        def result = readFile encoding: 'utf-8', file: "${OUTPUT}/params.message2"
+        return result
+    } catch (ex) {
+        return 'value2'
     }
 }
