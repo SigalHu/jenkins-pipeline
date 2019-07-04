@@ -8,7 +8,8 @@ pipeline {
     // 注入环境变量
     environment {
         ACCESS_KEY = credentials('40b821ba-acf1-40cc-93ee-d34edd16199e')
-        PYTHONPATH = "${WORKSPACE}/scripts"
+//        PYTHONPATH = "${WORKSPACE}/scripts"
+        PYTHONPATH = "${WORKSPACE}"
     }
 
     parameters {
@@ -16,22 +17,22 @@ pipeline {
     }
 
     stages {
-        stage('checkout scripts') {
-            input {
-                message "Input git repo branch!"
-                ok "OK"
-                parameters {
-                    string(name: 'branch', defaultValue: 'master', description: 'branch')
-                }
-            }
-            steps {
-                sh "rm -rf ${WORKSPACE}/*"
-                dir('scripts') {
-                    git branch: "${branch}", url: 'git@github.com:SigalHu/jenkins-pipeline.git'
-                    sh 'pip3 install -r requirements.txt'
-                }
-            }
-        }
+//        stage('checkout scripts') {
+//            input {
+//                message "Input git repo branch!"
+//                ok "OK"
+//                parameters {
+//                    string(name: 'branch', defaultValue: 'master', description: 'branch')
+//                }
+//            }
+//            steps {
+//                sh "rm -rf ${WORKSPACE}/*"
+//                dir('scripts') {
+//                    git branch: "${branch}", url: 'git@github.com:SigalHu/jenkins-pipeline.git'
+//                    sh 'pip3 install -r requirements.txt'
+//                }
+//            }
+//        }
         stage('print envs') {
             input {
                 message "Input some message!"
@@ -42,26 +43,26 @@ pipeline {
                 }
             }
             steps {
-                dir('scripts') {
+//                dir('scripts') {
                     echo 'print envs...'
                     sh "python3 scripts/print_envs.py"
-                }
+//                }
             }
         }
         stage('print dirs') {
             steps {
-                dir('scripts') {
+//                dir('scripts') {
                     echo 'print dirs...'
                     sh "python3 scripts/print_dirs.py"
-                }
+//                }
             }
         }
         stage('ssh connect') {
             steps {
-                dir('scripts') {
+//                dir('scripts') {
                     echo 'test ssh connect...'
                     sh "python3 scripts/ssh_connect.py"
-                }
+//                }
             }
         }
         stage('delete file') {
