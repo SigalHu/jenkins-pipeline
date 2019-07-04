@@ -15,6 +15,8 @@ pipeline {
 
     parameters {
         choice(name: 'random_choice', choices: randomChoice(), description: 'This is a random choice!')
+        string(name: 'message3', defaultValue: 'value3', description: 'Input message3!')
+        string(name: 'message4', defaultValue: 'value4', description: 'Input message4!')
     }
 
     stages {
