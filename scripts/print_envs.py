@@ -11,6 +11,11 @@ def print_envs():
     print("message2=%s" % os.getenv("message2"))
     print("PYTHONPATH=%s" % os.getenv("PYTHONPATH"))
 
+    print("Start to print all env...")
+    for k, v in os.environ.items():
+        print(k + "=" + v)
+    print("end.")
+
 
 if __name__ == '__main__':
     print_envs()
