@@ -109,8 +109,15 @@ pipeline {
     }
     post {
         always {
-            echo 'test save user config...'
-            sh "python3 scripts/save_user_config.py xujun sigal"
+            script {
+                try {
+                    echo 'test save user config...'
+                    sh "python3 scripts/save_user_config.py xujun sigal"
+                    sh "cp ${JENKINS_HOME}/jobs/${JOB_NAME}/config.xml ${JENKINS_HOME}/jobs/${JOB_NAME}/config.xml.bak"
+                } catch (ex) {
+                    sh "cp ${JENKINS_HOME}/jobs/${JOB_NAME}/config.xml.bak ${JENKINS_HOME}/jobs/${JOB_NAME}/config.xml"
+                }
+            }
         }
     }
 }
