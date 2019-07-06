@@ -22,5 +22,6 @@ if __name__ == '__main__':
     config_content.replace("test123", os.getenv("message3"))
     print("content=" + config_content)
     io_utils.save_file(config_file, config_content)
-    requests.post("http://{}:{}@localhost:8080/job/{}/config.xml".format(sys.argv[1], sys.argv[2], job_name),
-                  data="@" + config_file, headers={"Content-Type": "text/xml"})
+    resp = requests.post("http://{}:{}@localhost:8080/job/{}/config.xml".format(sys.argv[1], sys.argv[2], job_name),
+                         data="@" + config_file, headers={"Content-Type": "text/xml"})
+    print("resp=" + resp.text)
