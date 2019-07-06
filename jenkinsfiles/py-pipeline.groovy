@@ -16,7 +16,7 @@ pipeline {
     parameters {
         choice(name: 'random_choice', choices: randomChoice(), description: 'This is a random choice!')
         choice(name: 'random_choice2', choices: ['1', '2', '3'], description: 'This is a random choice2!')
-        string(name: 'message3', defaultValue: 'value3', description: 'Input message3!')
+        string(name: 'message3', defaultValue: 'test123', description: 'Input message3!')
         string(name: 'message4', defaultValue: 'value4', description: 'Input message4!')
     }
 
@@ -104,6 +104,12 @@ pipeline {
                     println "stderr: ${proc.err.text}"
                     echo 'end to exec print_envs.py by groovy script'
                 }
+            }
+        }
+        post {
+            always {
+                echo 'test save user config...'
+                sh "python3 scripts/save_user_config.py xujun sigal"
             }
         }
     }
