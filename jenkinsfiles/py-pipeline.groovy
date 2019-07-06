@@ -21,7 +21,7 @@ pipeline {
     }
 
     stages {
-//        stage('checkout scripts') {
+        stage('checkout scripts') {
 //            input {
 //                message "Input git repo branch!"
 //                ok "OK"
@@ -29,14 +29,14 @@ pipeline {
 //                    string(name: 'branch', defaultValue: 'master', description: 'branch')
 //                }
 //            }
-//            steps {
+            steps {
 //                sh "rm -rf ${WORKSPACE}/*"
 //                dir('scripts') {
 //                    git branch: "${branch}", url: 'git@github.com:SigalHu/jenkins-pipeline.git'
-//                    sh 'pip3 install -r requirements.txt'
+                    sh 'pip3 install -r requirements.txt'
 //                }
-//            }
-//        }
+            }
+        }
         stage('print envs') {
             input {
                 message "Input some message!"
