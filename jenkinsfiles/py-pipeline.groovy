@@ -106,11 +106,11 @@ pipeline {
                 }
             }
         }
-        post {
-            always {
-                echo 'test save user config...'
-                sh "python3 scripts/save_user_config.py xujun sigal"
-            }
+    }
+    post {
+        always {
+            echo 'test save user config...'
+            sh "python3 scripts/save_user_config.py xujun sigal"
         }
     }
 }
